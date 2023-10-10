@@ -1,28 +1,29 @@
-const text = 'Булочка'; // Проверяемая сторка
-const number = 20; // Cтрока короче ** символов
-let answer; // Переменная для записи Палиндрома
+const WordsСhecked = 'Булочка'; // Проверяемая сторка
+const number = 20; // Максимвльно допустимая строка
 
 // Функция для проверки длины строки
 
-const calculate = function (length, value) {
-  if (length.length <= value) {
-    console.log('true');
+const CheckingWordLength = function (words, value) {
+  if (words.length <= value) {
+    return true;
   } else {
-    console.log('false');
+    return false;
   }
 };
-calculate (text, number);
+console.log(CheckingWordLength (WordsСhecked, number));
+
 
 // Функция для проверки, является ли строка палиндромом
 
-const poli = function (txt) {
-  txt = txt.toLowerCase();
-  for(let i = 1; i <= txt.length - i ; i++) {
-    if(txt[i - 1] === txt[txt.length - i]){
-      answer = 'true';
+const palindrom = function (text) {
+  text = text.toLowerCase();
+  for(let i = 1; i <= text.length - i ; i++) {
+    if(text[i - 1] === text[text.length - i]){
+      return true;
     } else {
-      answer = 'false'; break;
+      return false;
     }
-  } return answer;
+  }
 };
-console.log(poli(text));
+console.log(palindrom(WordsСhecked));
+
