@@ -1,5 +1,5 @@
 const WordsСhecked = 'Булочка'; // Проверяемая сторка
-const number = 20; // Максимвльно допустимая строка
+const number = 2; // Максимвльно допустимая строка
 
 // Функция для проверки длины строки
 
@@ -9,14 +9,13 @@ console.log(CheckingWordLength (WordsСhecked, number));
 
 // Функция для проверки, является ли строка палиндромом
 
-const palindrom = function (text) {
-  text = text.toLowerCase();
-  for(let i = 1; i <= text.length - i ; i++) {
-    if(text[i - 1] === text[text.length - i]){
-      return true;
-    } else {
-      return false;
-    }
+const palindrom = (text) => {
+  text = text.replaceAll(' ', '').toLowerCase();
+  let newText = '';
+  for(let i = text.length - 1; i >= 0 ; i--) {
+    newText += text[i];
   }
+  return text === newText;
 };
+
 console.log(palindrom(WordsСhecked));
