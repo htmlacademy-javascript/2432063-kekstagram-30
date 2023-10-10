@@ -3,13 +3,7 @@ const number = 20; // Максимвльно допустимая строка
 
 // Функция для проверки длины строки
 
-const CheckingWordLength = function (words, value) {
-  if (words.length <= value) {
-    return true;
-  } else {
-    return false;
-  }
-};
+const CheckingWordLength = (words, value) => words.length <= value;
 console.log(CheckingWordLength (WordsСhecked, number));
 
 
@@ -26,4 +20,3 @@ const palindrom = function (text) {
   }
 };
 console.log(palindrom(WordsСhecked));
-
