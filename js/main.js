@@ -33,8 +33,8 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 //создает комментарий
 const createСomment = (x, ID) => ({
-  id: ID+1,
-  avatar: 'img/avatar-' + getRandomInteger(1, 6) + '.svg',
+  id: ID + 1,
+  avatar: `img/avatar-${ getRandomInteger(1, 6) }.svg`,
   message: getRandomArrayElement(messages),
   name: getRandomArrayElement(names),
 });
@@ -43,10 +43,10 @@ const createСomment = (x, ID) => ({
 const generatesСomments = Array.from({length: getRandomInteger(0,30)}, createСomment);
 
 
-//создает обектами
+//создает объект
 const createObject = (x, ID) => ({
-  id: ID+1,
-  url: 'photos/' + (ID+1) + '.jpg',
+  id: ID + 1,
+  url: `photos/${ ID + 1 }.jpg`,
   description: 'булочки',
   likes:  getRandomInteger(15, 200),
   comments: generatesСomments,
@@ -56,10 +56,5 @@ const createObject = (x, ID) => ({
 const generatesObject = Array.from({length: photoCount}, createObject);
 
 console.log(generatesObject);
-
-
-
-
-
 
 
