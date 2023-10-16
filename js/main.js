@@ -1,4 +1,4 @@
-const object = 4; //количество обектов
+const object = 4; //количество объектов
 
 // функция случайного числа
 const getRandomInteger = (a, b) => {
@@ -8,8 +8,8 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-//заполняем массив коментариев
-const createComments = (x, ID) => ({
+//заполняем массив обектами
+const createObject = (x, ID) => ({
   id: ID+1,
   url: 'photos/' + (ID+1) + '.jpg',
   description: 'булочки',
@@ -18,6 +18,6 @@ const createComments = (x, ID) => ({
 
 });
 //Генерирует объекты
-const generatesObject = Array.from({length: object}, createComments);
+const generatesObject = Array.from({length: object}, createObject);
 
 console.log(generatesObject);
