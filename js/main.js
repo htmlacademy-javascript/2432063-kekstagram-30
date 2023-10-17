@@ -32,7 +32,7 @@ const getRandomInteger = (a, b) => {
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 //создает комментарий
-const createСomment = (undefined, id) => ({
+const createСomment = (_, id) => ({
   id: id + 1,
   avatar: `img/avatar-${ getRandomInteger(1, 6) }.svg`,
   message: getRandomArrayElement(MASSAGES),
@@ -40,7 +40,7 @@ const createСomment = (undefined, id) => ({
 });
 
 //создает объект
-const createObject = (undefined, id) => ({
+const createObject = (_, id) => ({
   id: id + 1,
   url: `photos/${ id + 1 }.jpg`,
   description: 'булочки',
