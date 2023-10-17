@@ -39,17 +39,13 @@ const createСomment = (undefined, id) => ({
   name: getRandomArrayElement(NAMES),
 });
 
-//Генерирует массив с комментариями
-const generatesСomments = Array.from({length: getRandomInteger(0,30)}, createСomment);
-
-
 //создает объект
 const createObject = (undefined, id) => ({
   id: id + 1,
   url: `photos/${ id + 1 }.jpg`,
   description: 'булочки',
   likes:  getRandomInteger(15, 200),
-  comments: generatesСomments,
+  comments: Array.from({length: getRandomInteger(0,30)}, createСomment),
 });
 
 //Генерирует массив с объектами
