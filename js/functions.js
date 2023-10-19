@@ -1,21 +1,18 @@
-const WordsСhecked = 'Булочка'; // Проверяемая сторка
-const number = 2; // Максимвльно допустимая строка
+const calculateTimeInMinutes = (time) => time.split(':')[0] * 60 + Number(time.split(':')[1]);
 
-// Функция для проверки длины строки
+const showTime = (beginingWorkDay, endWorkDay, startMeeting, meetingInMinutes) => {
 
-const CheckingWordLength = (words, value) => words.length <= value;
-console.log(CheckingWordLength (WordsСhecked, number));
+  const beginingWorkDayMinutes = calculateTimeInMinutes(beginingWorkDay);
+  const endWorkDayMinutes = calculateTimeInMinutes(endWorkDay);
+  const startMeetingMinutes = calculateTimeInMinutes(startMeeting);
 
-
-// Функция для проверки, является ли строка палиндромом
-
-const palindrom = (text) => {
-  text = text.replaceAll(' ', '').toLowerCase();
-  let newText = '';
-  for(let i = text.length - 1; i >= 0 ; i--) {
-    newText += text[i];
+  if (endWorkDayMinutes - startMeetingMinutes >= meetingInMinutes && beginingWorkDayMinutes <= startMeetingMinutes) {
+    return true;
+  } else {
+    return false;
   }
-  return text === newText;
-};
+} ;
 
-console.log(palindrom(WordsСhecked));
+
+const timeValue = showTime ('14:00', '17:30', '14:00', 90);
+console.log(timeValue);
