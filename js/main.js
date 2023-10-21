@@ -9,7 +9,7 @@ const NAMES = [
   'Вашингтон',
 ];
 
-const MASSAGES = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -18,7 +18,7 @@ const MASSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-const PHOTO_COUNT = 4; //количество объектов
+const PHOTO_COUNT = 25; //количество объектов
 
 // функция случайного числа
 const getRandomInteger = (a, b) => {
@@ -32,23 +32,23 @@ const getRandomInteger = (a, b) => {
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 //создает комментарий
-const createСomment = (_, id) => ({
+const createСomment = (id) => ({
   id: id + 1,
   avatar: `img/avatar-${ getRandomInteger(1, 6) }.svg`,
-  message: getRandomArrayElement(MASSAGES),
+  message: getRandomArrayElement(MESSAGES),
   name: getRandomArrayElement(NAMES),
 });
 
 //создает объект
-const createObject = (_, id) => ({
+const createObject = (id) => ({
   id: id + 1,
   url: `photos/${ id + 1 }.jpg`,
   description: 'булочки',
   likes:  getRandomInteger(15, 200),
-  comments: Array.from({length: getRandomInteger(0,30)}, createСomment),
+  comments: Array.from({length: getRandomInteger(0,30)}, (_, id) => createСomment(id)),
 });
 
 //Генерирует массив с объектами
-const generatesObject = Array.from({length: PHOTO_COUNT}, createObject);
+const generatesObject = Array.from({length: PHOTO_COUNT}, (_, id) => createObject(id));
 
 console.log(generatesObject);
