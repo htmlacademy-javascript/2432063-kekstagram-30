@@ -1,3 +1,5 @@
+import {getRandomInteger} from './util.js';
+
 const NAMES = [
   'Иван',
   'Хуан Себастьян',
@@ -20,13 +22,7 @@ const MESSAGES = [
 
 const PHOTO_COUNT = 25; //количество объектов
 
-// функция случайного числа
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
+
 
 //случайный элемент массива
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
