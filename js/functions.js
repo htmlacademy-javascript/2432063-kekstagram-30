@@ -19,3 +19,21 @@ const palindrom = (text) => {
 };
 
 console.log(palindrom(WordsСhecked));
+
+
+const calculateTimeInMinutes = (time) => {
+  const [hours, minutes] = time.split(':').map((item) => Number(item));
+  return hours * 60 + minutes;
+};
+
+
+const showTime = (beginingWorkDay, endWorkDay, startMeeting, meetingInMinutes) => {
+  const beginingWorkDayMinutes = calculateTimeInMinutes(beginingWorkDay);
+  const endWorkDayMinutes = calculateTimeInMinutes(endWorkDay);
+  const startMeetingMinutes = calculateTimeInMinutes(startMeeting);
+  return (endWorkDayMinutes - startMeetingMinutes >= meetingInMinutes && beginingWorkDayMinutes <= startMeetingMinutes);
+} ;
+
+
+const timeValue = showTime ('14:00', '17:30', '14:00', 90);
+console.log(timeValue);
