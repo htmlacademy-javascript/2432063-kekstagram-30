@@ -40,10 +40,10 @@ const createObject = (id) => ({
   url: `photos/${ id + 1 }.jpg`,
   description: 'булочки',
   likes:  getRandomInteger(15, 200),
-  comments: Array.from({length: getRandomInteger(0,30)}, (_, id) => createСomment(id))
+  comments: Array.from({length: getRandomInteger(0,30)}, (_, index) => createСomment(index))
 });
 
 //Генерирует массив с объектами
-const generatesObject = Array.from({length: PHOTO_COUNT}, (_, id) => createObject(id)););
+const generatesObject = Array.from({length: PHOTO_COUNT}, (_, index) => createObject(index));
 
 export {generatesObject};
