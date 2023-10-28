@@ -23,7 +23,7 @@ console.log(palindrom(WordsСhecked));
 
 const calculateTimeInMinutes = (time) => {
   const [hours, minutes] = time.split(':').map((item) => Number(item));
-  return time = hours * 60 + minutes;
+  return hours * 60 + minutes;
 };
 
 
@@ -31,11 +31,7 @@ const showTime = (beginingWorkDay, endWorkDay, startMeeting, meetingInMinutes) =
   const beginingWorkDayMinutes = calculateTimeInMinutes(beginingWorkDay);
   const endWorkDayMinutes = calculateTimeInMinutes(endWorkDay);
   const startMeetingMinutes = calculateTimeInMinutes(startMeeting);
-  if (endWorkDayMinutes - startMeetingMinutes >= meetingInMinutes && beginingWorkDayMinutes <= startMeetingMinutes) {
-    return true;
-  } else {
-    return false;
-  }
+  return (endWorkDayMinutes - startMeetingMinutes >= meetingInMinutes && beginingWorkDayMinutes <= startMeetingMinutes);
 } ;
 
 
