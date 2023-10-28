@@ -1,1 +1,1 @@
-import { generatesObject } from './data.js';
+import { photosList } from './gallery.js';
