@@ -1,5 +1,5 @@
 import { photosList } from './gallery';
-
+import { socialComments } from './Comment.js';
 
 const bigPhoto = document.querySelector('.big-picture');
 const miniPhoto = photosList.querySelectorAll('.picture');
