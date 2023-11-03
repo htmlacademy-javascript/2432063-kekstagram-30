@@ -4,10 +4,9 @@ import { generatesObject } from './data';
 const photoTemplate = document.querySelector('#picture').content;
 const photosList = document.querySelector('.pictures');
 
-const createPhotos = [...generatesObject]; // массив фотографий
+const createPhotos = generatesObject; // массив фотографий
 
 const createListPictures = document.createDocumentFragment();
-
 
 
 // заполняет созданный элемент
