@@ -1,5 +1,6 @@
 import { photosList } from './gallery';
 import { renderMessagesByIndex } from './Comment.js';
+import { isEscapeKey } from './util';
 
 const bigPhoto = document.querySelector('.big-picture');
 const miniPhoto = photosList.querySelectorAll('.picture');
@@ -8,13 +9,22 @@ const bigPhotoSocial = document.querySelector('.big-picture__social');
 const socialCommentCount = document.querySelector('.social__comment-count');
 
 
+const onEscapeKeydown = () => {
+  document.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      bigPhoto.classList.add('hidden');
+      document.querySelector('body').classList.remove('modal-open');
+    }
+  });
+};
+
 const openBigPhoto = () => {
   bigPhoto.classList.remove('hidden');
-
   document.querySelector('body').classList.add('modal-open');
   document.querySelector('.social__comment-count').classList.add('hidden');
   document.querySelector('.comments-loader').classList.add('hidden');
-
+  onEscapeKeydown();
 };
 
 const closeBigPhoto = () => {
@@ -22,7 +32,6 @@ const closeBigPhoto = () => {
   document.querySelector('body').classList.remove('modal-open');
   document.querySelector('.social__comment-count').classList.remove('hidden');
   document.querySelector('.comments-loader').classList.remove('hidden');
-
 };
 
 miniPhoto.forEach((selectedPhoto, index) => {
