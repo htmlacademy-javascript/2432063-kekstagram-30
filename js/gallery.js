@@ -1,3 +1,4 @@
+//  отрисовка миниатюр
 import { generatesObject } from './data';
 
 const photoTemplate = document.querySelector('#picture').content;
@@ -6,6 +7,7 @@ const photosList = document.querySelector('.pictures');
 const createPhotos = generatesObject; // массив фотографий
 
 const createListPictures = document.createDocumentFragment();
+
 
 // заполняет созданный элемент
 createPhotos.forEach(({url, description, likes, comments}) => {
@@ -18,5 +20,6 @@ createPhotos.forEach(({url, description, likes, comments}) => {
 });
 
 photosList.appendChild(createListPictures);
+
 
 export { photosList };
