@@ -1,73 +1,73 @@
 const MAX_HASHTAG_COUNT = 5;
-const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
+const VALID_SIMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ErrorText = {
-  INVALID_COUNT: 'Максимум ${MAX_HASHTAG_COUNT} хэштегов',
-  NOT_UNIQUE: 'Хештэги должны быть уникальными',
-  INVALID_PATTERN: 'Неаправильный хэштэг'
+  INVALID_COUNT: `Максимум ${MAX_HASHTAG_COUNT} хэштегов`,
+  NOT_UNIQUE: 'Хэштеги должны быть уникальными',
+  INVALID_PATTERN: 'Неверный хэштег',
 };
 
-const body = document.querySelector('body');
-const form = document.querySelector('.img-upload__form');
-const overlay = form.querySelector('.img-upload__overlay');
-const cancelButton = form.querySelector('.img-upload__cancel');
-const fileField = form.querySelector('.img-upload__input');
-const hashtagField = form.querySelector('.text__hashtags');
-const commentField = form.querySelector('.text__description');
+const pictureForm = document.querySelector('.img-upload__form');
+const pictureUploadContainer = pictureForm.querySelector('.img-upload__overlay');
+const pictureOpeninput = pictureForm.querySelector('.img-upload__input');
+const pictureCloseButton = pictureForm.querySelector('.img-upload__cancel');
+const form = document.getElementById('upload-select-image');
+const hashtagField = pictureForm.querySelector('.text__hashtags');
+const commentField = pictureForm.querySelector('.text__description');
 
-const pristine = new Pristine(form, {
-  classTo: '.img-upload__field-wrapper',
-  errorTextParent: '.img-upload__field-wrapper',
-  errorTextClass: '.img-upload__field-wrapper__error',
+const pristine = new Pristine(pictureForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper--error',
 });
 
-const showModal = () => {
-  overlay.classList.remove('hidden');
-  body.classList.add('modal-open');
+const showForm = () => {
+  pictureUploadContainer.classList.remove('hidden');
+  document.querySelector('body').classList.add('modal-open');
+  document.addEventListener('keydown', onDocumentKeydown);
+};
+
+const closeForm = () => {
+  form.reset();
+  pristine.reset();
+  pictureUploadContainer.classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const hideModal = () => {
-  //form.reset();
-  //pristine.reset();
-  overlay.classList.add('hidden');
-  body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
-};
-
-const isTextFiledFocused = () =>
-  document.activeElement === hashtagField ||
-  document.activeElement === commentField;
+const isTextFieldFocused = () => document.activeElement === hashtagField || document.activeElement === commentField;
 
 const normalizeTags = (tagString) => tagString
   .trim()
   .split(' ')
   .filter((tag) => Boolean(tag.length));
 
-
-const hasValidTags = (value) => normalizeTags(value).every((tag) => VALID_SYMBOLS.test(tag));
+const hasValidTags = (value) => normalizeTags(value).every((tag) => VALID_SIMBOLS.test(tag));
 
 const hasValidCount = (value) => normalizeTags(value).length <= MAX_HASHTAG_COUNT;
 
 const hasUniqueTags = (value) => {
-  const lowCaseTags = normalizeTags(value).map((tag) => tag.toLowerCase());
-  return lowCaseTags.length === new Set(lowCaseTags).size;
+  const lowerCaseTags = normalizeTags(value).map((tag) => tag.toLowerCase());
+  return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
+
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape' && !isTextFiledFocused()) {
+  if (evt.key === 'Escape' && !isTextFieldFocused()) {
     evt.preventDefault();
-    hideModal();
+    closeForm();
   }
 }
 
-const onCancelBattonClick = () => {
-  hideModal();
+const onPictureInputChange = () => {
+  showForm();
 };
 
-const onFileInputChange = () => {
-  showModal();
+const onClosePictureButtonClick = () => {
+  closeForm();
 };
 
-const onFormSubmit = () => {
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  pristine.validate();
 };
 
 pristine.addValidator(
@@ -89,10 +89,11 @@ pristine.addValidator(
 pristine.addValidator(
   hashtagField,
   hasValidTags,
-  ErrorText.NOT_UNIQUE,
+  ErrorText.INVALID_PATTERN,
   1,
   true
 );
 
-fileField.addEventListener('change', onFileInputChange);
-cancelButton.addEventListener('click', onCancelBattonClick);
+pictureOpeninput.addEventListener('change', onPictureInputChange);
+pictureCloseButton.addEventListener('click', onClosePictureButtonClick);
+form.addEventListener('submit', onFormSubmit);
