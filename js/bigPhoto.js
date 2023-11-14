@@ -9,6 +9,9 @@ const bigPhotoSocial = document.querySelector('.big-picture__social');
 const socialCommentCount = document.querySelector('.social__comment-count');
 const socialCommentsLoader = document.querySelector('.social__comments-loader');
 
+const LOAD_COMMENTS_PER_CLICK = 5;
+let countReanderComment = 5;
+
 
 const onEscapeKeydown = () => {
   document.addEventListener('keydown', (evt) => {
@@ -35,36 +38,44 @@ const closeBigPhoto = () => {
   document.querySelector('body').classList.remove('modal-open');
   document.querySelector('.social__comment-count').classList.remove('hidden');
   document.querySelector('.comments-loader').classList.remove('hidden');
+  countReanderComment = LOAD_COMMENTS_PER_CLICK;
 };
 
 
 miniPhoto.forEach((selectedPhoto, index) => {
   selectedPhoto.addEventListener('click', (evt) => {
     evt.preventDefault();
+    console.log('первый', countReanderComment);
 
-    const commentTotalCount = Number(selectedPhoto.querySelector('.picture__comments').textContent);
-    let countReanderComment = 5;
-    if (commentTotalCount <= countReanderComment) {
-      countReanderComment = commentTotalCount;
-      document.querySelector('.comments-loader').classList.add('hidden');
+    const commentsTotalCount = Number(selectedPhoto.querySelector('.picture__comments').textContent);
+    const socialCommentShownCount = socialCommentCount.querySelector('.social__comment-shown-count');
+    const hideComentsLoader = () => document.querySelector('.comments-loader').classList.add('hidden');
+
+    if (commentsTotalCount <= countReanderComment) {
+      countReanderComment = commentsTotalCount;
+      hideComentsLoader();
     }
 
-    socialCommentsLoader.addEventListener('click', () => {
+    const onSocialCommentsLoaderClick = () => {
 
-      if (commentTotalCount <= 5) {
-        socialCommentCount.querySelector('.social__comment-shown-count').textContent = commentTotalCount;
+      if (commentsTotalCount <= LOAD_COMMENTS_PER_CLICK) {
+        socialCommentShownCount.textContent = commentsTotalCount;
+        //console.log('первый', countReanderComment);
 
-      } if (countReanderComment + 5 > commentTotalCount) {
-        socialCommentCount.querySelector('.social__comment-shown-count').textContent = commentTotalCount;
-        document.querySelector('.comments-loader').classList.add('hidden');
-        countReanderComment = 5;
+      } if (countReanderComment + LOAD_COMMENTS_PER_CLICK > commentsTotalCount) {
+        socialCommentShownCount.textContent = commentsTotalCount;
+        hideComentsLoader();
+        //console.log('втойро', countReanderComment);
 
       } else {
-        countReanderComment += 5;
-        socialCommentCount.querySelector('.social__comment-shown-count').textContent = countReanderComment;
-
+        countReanderComment += LOAD_COMMENTS_PER_CLICK;
+        socialCommentShownCount.textContent = countReanderComment;
+        console.log('третий', countReanderComment);
       }
-    });
+    };
+
+
+    socialCommentsLoader.addEventListener('click', onSocialCommentsLoaderClick);
 
 
     bigPhoto.querySelector('img').src = selectedPhoto.querySelector('.picture__img').src;
@@ -74,11 +85,12 @@ miniPhoto.forEach((selectedPhoto, index) => {
     bigPhotoSocial.querySelector('.social__caption').textContent = selectedPhoto.querySelector('.picture__img').alt;
     renderMessagesByIndex(index);
     openBigPhoto(index);
-  });
-});
 
-closeButton.addEventListener('click', () => {
-  closeBigPhoto();
+    closeButton.addEventListener('click', () => {
+      closeBigPhoto();
+      socialCommentsLoader.removeEventListener('click', qqq);
+    });
+  });
 });
 
 
