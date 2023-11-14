@@ -62,7 +62,7 @@ miniPhoto.forEach((selectedPhoto, index) => {
         socialCommentShownCount.textContent = commentsTotalCount;
         //console.log('первый', countReanderComment);
 
-      } if (countReanderComment + LOAD_COMMENTS_PER_CLICK > commentsTotalCount) {
+      } if (countReanderComment + LOAD_COMMENTS_PER_CLICK >= commentsTotalCount) {
         socialCommentShownCount.textContent = commentsTotalCount;
         hideComentsLoader();
         //console.log('втойро', countReanderComment);
@@ -88,7 +88,7 @@ miniPhoto.forEach((selectedPhoto, index) => {
 
     closeButton.addEventListener('click', () => {
       closeBigPhoto();
-      socialCommentsLoader.removeEventListener('click', qqq);
+      socialCommentsLoader.removeEventListener('click', onSocialCommentsLoaderClick);
     });
   });
 });
