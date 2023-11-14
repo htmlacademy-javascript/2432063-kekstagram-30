@@ -1,3 +1,5 @@
+import { init, reset } from './effect';
+
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SIMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ErrorText = {
@@ -5,6 +7,7 @@ const ErrorText = {
   NOT_UNIQUE: 'Хэштеги должны быть уникальными',
   INVALID_PATTERN: 'Неверный хэштег',
 };
+
 
 const pictureForm = document.querySelector('.img-upload__form');
 const pictureUploadContainer = pictureForm.querySelector('.img-upload__overlay');
@@ -24,6 +27,7 @@ const showForm = () => {
   pictureUploadContainer.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
+  init();
 };
 
 const closeForm = () => {
@@ -32,6 +36,7 @@ const closeForm = () => {
   pictureUploadContainer.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  reset ();
 };
 
 const isTextFieldFocused = () => document.activeElement === hashtagField || document.activeElement === commentField;
