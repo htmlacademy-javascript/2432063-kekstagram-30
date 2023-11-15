@@ -143,5 +143,4 @@ const init = () => {
   createSlider(effectToSliderOptions[chosenEffect]);
   effectsElement.addEventListener('change', onEffectsChange);
 };
-
 export { init, reset };
