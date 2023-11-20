@@ -1,6 +1,7 @@
 import { init, reset } from './effect';
 import { sendPicture } from './api.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
+import { scalePictureField, onZoomChange, resetScale } from './zoom.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SIMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -43,6 +44,7 @@ const closeForm = () => {
   pictureUploadContainer.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  resetScale();
   reset ();
 };
 
@@ -127,3 +129,4 @@ pristine.addValidator(
 pictureOpeninput.addEventListener('change', onPictureInputChange);
 pictureCloseButton.addEventListener('click', onClosePictureButtonClick);
 form.addEventListener('submit', onFormSubmit);
+scalePictureField.addEventListener('click', onZoomChange);
