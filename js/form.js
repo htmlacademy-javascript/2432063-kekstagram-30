@@ -1,4 +1,7 @@
 import { init, reset } from './effect';
+import { sendPicture } from './api.js';
+import { showSuccessMessage, showErrorMessage } from './message.js';
+import { scalePictureField, onZoomChange, resetScale } from './zoom.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SIMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -16,6 +19,11 @@ const pictureCloseButton = pictureForm.querySelector('.img-upload__cancel');
 const form = document.getElementById('upload-select-image');
 const hashtagField = pictureForm.querySelector('.text__hashtags');
 const commentField = pictureForm.querySelector('.text__description');
+const submitButton = pictureForm.querySelector('.img-upload__submit');
+
+const toggleSubmitButton = (isDisabled) => {
+  submitButton.disabled = isDisabled;
+};
 
 const pristine = new Pristine(pictureForm, {
   classTo: 'img-upload__field-wrapper',
@@ -36,6 +44,7 @@ const closeForm = () => {
   pictureUploadContainer.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  resetScale();
   reset ();
 };
 
@@ -70,9 +79,27 @@ const onClosePictureButtonClick = () => {
   closeForm();
 };
 
+const sendForm = async (formElement) => {
+  if (!pristine.validate()) {
+    toggleSubmitButton(true);
+    return;
+  }
+
+  try {
+    toggleSubmitButton(true);
+    await sendPicture(new FormData(formElement));
+    toggleSubmitButton(false);
+    closeForm();
+    showSuccessMessage();
+  } catch {
+    showErrorMessage();
+    toggleSubmitButton(false);
+  }
+};
+
 const onFormSubmit = (evt) => {
   evt.preventDefault();
-  pristine.validate();
+  sendForm(evt.target);
 };
 
 pristine.addValidator(
@@ -102,3 +129,4 @@ pristine.addValidator(
 pictureOpeninput.addEventListener('change', onPictureInputChange);
 pictureCloseButton.addEventListener('click', onClosePictureButtonClick);
 form.addEventListener('submit', onFormSubmit);
+scalePictureField.addEventListener('click', onZoomChange);
