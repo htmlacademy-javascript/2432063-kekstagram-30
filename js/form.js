@@ -1,4 +1,6 @@
 import { init, reset } from './effect';
+import { sendPicture } from './api.js';
+import { showSuccessMessage, showErrorMessage } from './message.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SIMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -16,6 +18,11 @@ const pictureCloseButton = pictureForm.querySelector('.img-upload__cancel');
 const form = document.getElementById('upload-select-image');
 const hashtagField = pictureForm.querySelector('.text__hashtags');
 const commentField = pictureForm.querySelector('.text__description');
+const submitButton = pictureForm.querySelector('.img-upload__submit');
+
+const toggleSubmitButton = (isDisabled) => {
+  submitButton.disabled = isDisabled;
+};
 
 const pristine = new Pristine(pictureForm, {
   classTo: 'img-upload__field-wrapper',
@@ -70,9 +77,27 @@ const onClosePictureButtonClick = () => {
   closeForm();
 };
 
+const sendForm = async (formElement) => {
+  if (!pristine.validate()) {
+    toggleSubmitButton(true);
+    return;
+  }
+
+  try {
+    toggleSubmitButton(true);
+    await sendPicture(new FormData(formElement));
+    toggleSubmitButton(false);
+    closeForm();
+    showSuccessMessage();
+  } catch {
+    showErrorMessage();
+    toggleSubmitButton(false);
+  }
+};
+
 const onFormSubmit = (evt) => {
   evt.preventDefault();
-  pristine.validate();
+  sendForm(evt.target);
 };
 
 pristine.addValidator(
