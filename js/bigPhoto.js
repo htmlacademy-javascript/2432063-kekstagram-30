@@ -1,6 +1,9 @@
-import { photosList } from './gallery';
+//import { photosList } from './gallery';
 import { renderMessagesByIndex } from './Comment.js';
 import { isEscapeKey } from './util';
+
+const photosList = document.querySelector('.pictures');
+
 
 const bigPhoto = document.querySelector('.big-picture');
 const miniPhoto = photosList.querySelectorAll('.picture');
@@ -45,7 +48,7 @@ const closeBigPhoto = () => {
 miniPhoto.forEach((selectedPhoto, index) => {
   selectedPhoto.addEventListener('click', (evt) => {
     evt.preventDefault();
-    console.log('первый', countReanderComment);
+    //console.log('первый', countReanderComment);
 
     const commentsTotalCount = Number(selectedPhoto.querySelector('.picture__comments').textContent);
     const socialCommentShownCount = socialCommentCount.querySelector('.social__comment-shown-count');
@@ -70,7 +73,7 @@ miniPhoto.forEach((selectedPhoto, index) => {
       } else {
         countReanderComment += LOAD_COMMENTS_PER_CLICK;
         socialCommentShownCount.textContent = countReanderComment;
-        console.log('третий', countReanderComment);
+        //console.log('третий', countReanderComment);
       }
     };
 
@@ -92,6 +95,5 @@ miniPhoto.forEach((selectedPhoto, index) => {
     });
   });
 });
-
 
 export { miniPhoto };
