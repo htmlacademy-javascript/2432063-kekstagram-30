@@ -24,5 +24,13 @@ const getRandomInteger = (a, b) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, isEscapeKey, showErrorMessage};
+function debounce(callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export {isEscapeKey, showErrorMessage, debounce};
 
