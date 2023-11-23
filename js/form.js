@@ -1,8 +1,9 @@
 import { init, reset } from './effect';
 import { sendPicture } from './api.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
-import { scalePictureField, onZoomChange, resetScale } from './zoom.js';
+import { scalePictureField, onZoomChange, resetScale, pictureElement } from './zoom.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SIMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ErrorText = {
@@ -20,6 +21,8 @@ const form = document.getElementById('upload-select-image');
 const hashtagField = pictureForm.querySelector('.text__hashtags');
 const commentField = pictureForm.querySelector('.text__description');
 const submitButton = pictureForm.querySelector('.img-upload__submit');
+const fileChooser = document.querySelector('.img-upload__start input[type=file]');
+const effectsPreview = pictureForm.querySelectorAll('.effects__preview');
 
 const toggleSubmitButton = (isDisabled) => {
   submitButton.disabled = isDisabled;
@@ -46,6 +49,11 @@ const closeForm = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
   resetScale();
   reset ();
+};
+
+const isValidType = (file) => {
+  const fileName = file.name.toLowerCase();
+  return FILE_TYPES.some((it) => fileName.endsWith(it));
 };
 
 const isTextFieldFocused = () => document.activeElement === hashtagField || document.activeElement === commentField;
@@ -77,6 +85,17 @@ const onPictureInputChange = () => {
 
 const onClosePictureButtonClick = () => {
   closeForm();
+};
+
+const onFileInputChange = () => {
+  const file = pictureOpeninput.files[0];
+
+  if (file && isValidType(file)) {
+    pictureElement.src = URL.createObjectURL(file);
+    effectsPreview.forEach((preview) => {
+      preview.style.backgroundImage = `url('${pictureElement.src}')`;
+    });
+  }
 };
 
 const sendForm = async (formElement) => {
@@ -130,3 +149,4 @@ pictureOpeninput.addEventListener('change', onPictureInputChange);
 pictureCloseButton.addEventListener('click', onClosePictureButtonClick);
 form.addEventListener('submit', onFormSubmit);
 scalePictureField.addEventListener('click', onZoomChange);
+fileChooser.addEventListener('change', onFileInputChange);
