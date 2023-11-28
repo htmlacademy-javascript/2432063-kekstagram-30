@@ -48,7 +48,7 @@ const onClickButtonClose = (commentsLoaderClick) => {
 };
 
 const openPhoto = (photosOnPage) => {
-  photosOnPage.forEach((selectedPhoto, index, {url}) => {
+  photosOnPage.forEach((selectedPhoto, index) => {
     selectedPhoto.addEventListener('click', (evt) => {
       evt.preventDefault();
       const commentsTotalCount = Number(selectedPhoto.querySelector('.picture__comments').textContent);
