@@ -1,5 +1,5 @@
 //import { photosList } from './gallery';
-import { renderMessagesByIndex } from './Comment.js';
+import { renderMessagesByIndex } from './comment.js';
 import { isEscapeKey } from './util';
 
 const photosList = document.querySelector('.pictures');
