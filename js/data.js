@@ -63,10 +63,30 @@ const debounceRandom = debounce(rePaintRandom);
 const debounceDiscussed = debounce(rePaintDiscussed);
 
 
+// const filteredPhotosResaut = initGalleryFilters(photos, 'default');
+
+// const filteredPhotos = [];
+
+// const checkDataPhotos = () => {
+//   if (filteredPhotosResaut === undefined) {
+//     return [];
+//   }
+//   return filteredPhotosResaut;
+// };
+
+// renderPhotos(checkDataPhotos());
+
+
 const filteredPhotos = initGalleryFilters(photos, 'default');
-const filteredPhotos2 = initGalleryFilters(photos, 'random');
-renderPhotos(filteredPhotos);
-renderPhotos(filteredPhotos2);
+
+const checkDataPhotos = () => {
+  if (filteredPhotos === undefined) {
+    return [];
+  }
+  return filteredPhotos;
+};
+renderPhotos(checkDataPhotos());
+
 
 defaultButton.addEventListener('click', () => {
   debounceDefault();
