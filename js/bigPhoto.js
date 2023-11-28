@@ -15,8 +15,6 @@ const socialCommentsLoader = document.querySelector('.social__comments-loader');
 const LOAD_COMMENTS_PER_CLICK = 5;
 let countReanderComment = 5;
 
-const a = 0;
-
 const openBigPhoto = () => {
   bigPhoto.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
@@ -103,4 +101,4 @@ const openPhoto = (photosOnPage) => {
 
 
 openPhoto(miniPhoto);
-export { a, openPhoto };
+export { openPhoto };
