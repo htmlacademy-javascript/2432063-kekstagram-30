@@ -2,7 +2,7 @@ import { loadPictures } from './api.js';
 import { debounce, showErrorMessage } from './util.js';
 import { initGalleryFilters } from './filter.js';
 import { renderPhotos } from './gallery.js';
-import { openBigPhoto, qqq } from './bigPhoto.js';
+import { openPhoto } from './bigPhoto.js';
 
 const filterForm = document.querySelector('.img-filters__form');
 const defaultButton = filterForm.querySelector('#filter-default');
@@ -20,7 +20,7 @@ const bootstrap = async () => {
 };
 
 const photos = await bootstrap();
-
+let filteredPhotos = initGalleryFilters(photos, 'default');
 
 const rePaintDefault = () => {
   const pictures = document.querySelectorAll('.picture');
@@ -30,10 +30,14 @@ const rePaintDefault = () => {
   imageFilterButtonActive.classList.remove('img-filters__button--active');
   defaultButton.classList.add('img-filters__button--active');
   renderPhotos(elements);
-  console.log(elements);
+
+
   const photosList = document.querySelector('.pictures');
   const miniPhoto = photosList.querySelectorAll('.picture');
-  qqq(miniPhoto);
+
+  openPhoto(miniPhoto);
+
+
 };
 const rePaintRandom = () => {
   const pictures = document.querySelectorAll('.picture');
@@ -43,10 +47,10 @@ const rePaintRandom = () => {
   imageFilterButtonActive.classList.remove('img-filters__button--active');
   randomButton.classList.add('img-filters__button--active');
   renderPhotos(elements);
-
   const photosList = document.querySelector('.pictures');
   const miniPhoto = photosList.querySelectorAll('.picture');
-  qqq(miniPhoto);
+  openPhoto(miniPhoto);
+  filteredPhotos = initGalleryFilters(photos, 'random');
 };
 const rePaintDiscussed = () => {
   const pictures = document.querySelectorAll('.picture');
@@ -56,28 +60,16 @@ const rePaintDiscussed = () => {
   imageFilterButtonActive.classList.remove('img-filters__button--active');
   discussedButton.classList.add('img-filters__button--active');
   renderPhotos(elements);
+
+  const photosList = document.querySelector('.pictures');
+  const miniPhoto = photosList.querySelectorAll('.picture');
+  openPhoto(miniPhoto);
 };
 
 const debounceDefault = debounce(rePaintDefault);
 const debounceRandom = debounce(rePaintRandom);
 const debounceDiscussed = debounce(rePaintDiscussed);
 
-
-// const filteredPhotosResaut = initGalleryFilters(photos, 'default');
-
-// const filteredPhotos = [];
-
-// const checkDataPhotos = () => {
-//   if (filteredPhotosResaut === undefined) {
-//     return [];
-//   }
-//   return filteredPhotosResaut;
-// };
-
-// renderPhotos(checkDataPhotos());
-
-
-const filteredPhotos = initGalleryFilters(photos, 'default');
 
 const checkDataPhotos = () => {
   if (filteredPhotos === undefined) {
@@ -90,10 +82,12 @@ renderPhotos(checkDataPhotos());
 
 defaultButton.addEventListener('click', () => {
   debounceDefault();
+
 });
 
 randomButton.addEventListener('click', () => {
   debounceRandom();
+
 });
 
 

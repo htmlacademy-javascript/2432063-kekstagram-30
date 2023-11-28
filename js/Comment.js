@@ -5,10 +5,10 @@ const socialComments = document.querySelector('.social__comments');
 const messageTemplate = document.querySelector('.social__comment');
 
 
-const renderMessagesRange = (comments, startIndex2) => {
+const renderMessagesRange = (comments, startIndex) => {
   const cointss = 5;
   comments.forEach((coment, runIndex) => {
-    if (runIndex <= startIndex2 + cointss - 1) {
+    if (runIndex <= startIndex + cointss - 1) {
       const {avatar, message, name} = coment;
       const element = messageTemplate.cloneNode(true);
       element.querySelector('.social__picture').src = avatar;
