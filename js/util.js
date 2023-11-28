@@ -32,5 +32,5 @@ function debounce(callback, timeoutDelay = 500) {
   };
 }
 
-export {isEscapeKey, showErrorMessage, debounce};
+export {isEscapeKey, showErrorMessage, debounce, getRandomInteger};
 

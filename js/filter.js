@@ -24,7 +24,12 @@ const filterHandlers = {
 
 
 const initGalleryFilters = (data, filter) => {
+  if (!!data < 1) {
+    filtersElement.classList.add('img-filters--inactive');
+    return;
+  }
   filtersElement.classList.remove('img-filters--inactive');
+
   return filterHandlers[filter](data);
 };
 

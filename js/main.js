@@ -1,2 +1,2 @@
-import { miniPhoto } from './bigPhoto.js';
+import './bigPhoto.js';
 import './form.js';

@@ -1,3 +1,7 @@
+const MAX_ZOOM = 100;
+const MIN_ZOOM = 25;
+const STEP_ZOOM = 25;
+
 const scalePictureField = document.querySelector('.img-upload__scale');
 const buttonBigger = scalePictureField.querySelector('.scale__control--bigger');
 const buttonSmaller = scalePictureField.querySelector('.scale__control--smaller');
@@ -11,12 +15,12 @@ const onZoomChange = (evt) => {
   evt.preventDefault();
 
   if (evt.target === buttonSmaller) {
-    if (scaleZoom > 25) {
-      scaleZoom -= 25;
+    if (scaleZoom > MIN_ZOOM) {
+      scaleZoom -= STEP_ZOOM;
     }
   } else if (evt.target === buttonBigger) {
-    if (scaleZoom < 100) {
-      scaleZoom += 25;
+    if (scaleZoom < MAX_ZOOM) {
+      scaleZoom += STEP_ZOOM;
     }
   }
   pictureScalePercent.value = `${scaleZoom}%`;
@@ -24,8 +28,9 @@ const onZoomChange = (evt) => {
 };
 
 const resetScale = () => {
-  pictureElement.style.transform = `scale(${1})`;
-  pictureScalePercent.value = '100%';
+  pictureElement.style.transform = `scale(${MAX_ZOOM / 100})`;
+  pictureScalePercent.value = `${MAX_ZOOM}%`;
+  scaleZoom = MAX_ZOOM;
 };
 
 export { pictureElement, modalElement, scalePictureField, onZoomChange, resetScale };
