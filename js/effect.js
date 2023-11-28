@@ -1,3 +1,5 @@
+import { pictureElement, modalElement } from './zoom.js';
+
 const effectsName = {
   DEFAULT: 'none',
   CHROME: 'chrome',
@@ -63,8 +65,6 @@ const effectToSliderOptions = {
   },
 };
 
-const modalElement = document.querySelector('.img-upload');
-const imageElement = modalElement.querySelector('.img-upload__preview img');
 const effectsElement = modalElement.querySelector('.effects');
 const sliderElement = modalElement.querySelector('.effect-level__slider');
 const sliderContainerElement = modalElement.querySelector('.img-upload__effect-level');
@@ -76,12 +76,12 @@ const isDefault = () => chosenEffect === effectsName.DEFAULT;
 
 const setImageStyle = () => {
   if (isDefault()) {
-    imageElement.style.filter = null;
+    pictureElement.style.filter = null;
     return;
   }
   const { value } = effectLevelElement;
   const { style, unit } = effectToFilter[chosenEffect];
-  imageElement.style.filter = `${style}(${value}${unit})`;
+  pictureElement.style.filter = `${style}(${value}${unit})`;
 };
 
 const showSlider = () => {
@@ -103,6 +103,17 @@ const createSlider = ({ min, max, step }) => {
     step,
     start: max,
     connect: 'lower',
+    format: {
+      to: function (value) {
+        if (Number.isInteger(value)) {
+          return value.toFixed(0);
+        }
+        return value.toFixed(1);
+      },
+      from: function (value) {
+        return parseFloat(value);
+      },
+    },
   });
   sliderElement.noUiSlider.on('update', onSliderUpdate);
   hideSlider();
@@ -143,4 +154,6 @@ const init = () => {
   createSlider(effectToSliderOptions[chosenEffect]);
   effectsElement.addEventListener('change', onEffectsChange);
 };
+
 export { init, reset };
+

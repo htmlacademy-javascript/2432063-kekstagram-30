@@ -2,6 +2,7 @@ import { init, reset } from './effect';
 import { sendPicture } from './api.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
 import { scalePictureField, onZoomChange, resetScale, pictureElement } from './zoom.js';
+import { isEscapeKey } from './util.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const MAX_HASHTAG_COUNT = 5;
@@ -10,19 +11,19 @@ const ErrorText = {
   INVALID_COUNT: `Максимум ${MAX_HASHTAG_COUNT} хэштегов`,
   NOT_UNIQUE: 'Хэштеги должны быть уникальными',
   INVALID_PATTERN: 'Неверный хэштег',
+  INVALID_COMMENT: 'Длина комментария не может превышать 140 символов',
 };
 
-
+const bodyElement = document.querySelector('body');
 const pictureForm = document.querySelector('.img-upload__form');
 const pictureUploadContainer = pictureForm.querySelector('.img-upload__overlay');
-const pictureOpeninput = pictureForm.querySelector('.img-upload__input');
+const pictureOpenInput = pictureForm.querySelector('.img-upload__input');
 const pictureCloseButton = pictureForm.querySelector('.img-upload__cancel');
-const form = document.getElementById('upload-select-image');
 const hashtagField = pictureForm.querySelector('.text__hashtags');
 const commentField = pictureForm.querySelector('.text__description');
 const submitButton = pictureForm.querySelector('.img-upload__submit');
-const fileChooser = document.querySelector('.img-upload__start input[type=file]');
 const effectsPreview = pictureForm.querySelectorAll('.effects__preview');
+const fileChooser = document.querySelector('.img-upload__start input[type=file]');
 
 const toggleSubmitButton = (isDisabled) => {
   submitButton.disabled = isDisabled;
@@ -32,36 +33,45 @@ const pristine = new Pristine(pictureForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error',
-});
+}, false);
+
+const onHashtagFieldChange = () => {
+  toggleSubmitButton(false);
+  pristine.validate();
+};
+
+const onCommentFieldChange = () => {
+  toggleSubmitButton(false);
+  pristine.validate();
+};
 
 const showForm = () => {
   pictureUploadContainer.classList.remove('hidden');
-  document.querySelector('body').classList.add('modal-open');
+  bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-  init();
+  hashtagField.addEventListener('change', onHashtagFieldChange);
+  commentField.addEventListener('change', onCommentFieldChange);
 };
 
 const closeForm = () => {
-  form.reset();
-  pristine.reset();
   pictureUploadContainer.classList.add('hidden');
-  document.querySelector('body').classList.remove('modal-open');
+  bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  pictureForm.reset();
+  pristine.reset();
   resetScale();
-  reset ();
 };
 
 const isValidType = (file) => {
   const fileName = file.name.toLowerCase();
-  return FILE_TYPES.some((it) => fileName.endsWith(it));
+  const fileType = fileName.split('.').pop();
+  return FILE_TYPES.includes(fileType);
 };
-
-const isTextFieldFocused = () => document.activeElement === hashtagField || document.activeElement === commentField;
 
 const normalizeTags = (tagString) => tagString
   .trim()
   .split(' ')
-  .filter((tag) => Boolean(tag.length));
+  .filter(Boolean);
 
 const hasValidTags = (value) => normalizeTags(value).every((tag) => VALID_SIMBOLS.test(tag));
 
@@ -73,11 +83,21 @@ const hasUniqueTags = (value) => {
 };
 
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape' && !isTextFieldFocused()) {
+  const isErrorMessageExists = Boolean(document.querySelector('.error'));
+
+  if (isEscapeKey(evt) && !isErrorMessageExists) {
     evt.preventDefault();
     closeForm();
   }
 }
+
+hashtagField.addEventListener('keydown', (evt) => {
+  evt.stopPropagation();
+});
+
+commentField.addEventListener('keydown', (evt) => {
+  evt.stopPropagation();
+});
 
 const onPictureInputChange = () => {
   showForm();
@@ -88,38 +108,26 @@ const onClosePictureButtonClick = () => {
 };
 
 const onFileInputChange = () => {
-  const file = pictureOpeninput.files[0];
+  const file = pictureOpenInput.files[0];
 
   if (file && isValidType(file)) {
-    pictureElement.src = URL.createObjectURL(file);
+    const url = URL.createObjectURL(file);
+    pictureElement.src = url;
     effectsPreview.forEach((preview) => {
-      preview.style.backgroundImage = `url('${pictureElement.src}')`;
+      preview.style.backgroundImage = `url('${url}')`;
     });
   }
 };
 
-const sendForm = async (formElement) => {
-  if (!pristine.validate()) {
-    toggleSubmitButton(true);
-    return;
-  }
+const maxCommentLength = (comment) => comment.length <= 140;
 
-  try {
-    toggleSubmitButton(true);
-    await sendPicture(new FormData(formElement));
-    toggleSubmitButton(false);
-    closeForm();
-    showSuccessMessage();
-  } catch {
-    showErrorMessage();
-    toggleSubmitButton(false);
-  }
-};
-
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  sendForm(evt.target);
-};
+pristine.addValidator(
+  commentField,
+  maxCommentLength,
+  ErrorText.INVALID_COMMENT,
+  4,
+  true
+);
 
 pristine.addValidator(
   hashtagField,
@@ -145,8 +153,36 @@ pristine.addValidator(
   true
 );
 
-pictureOpeninput.addEventListener('change', onPictureInputChange);
+
+const sendForm = async (formElement) => {
+  if (!pristine.validate()) {
+    toggleSubmitButton(true);
+    return;
+  }
+
+  try {
+    toggleSubmitButton(true);
+    await sendPicture(new FormData(formElement));
+    closeForm();
+    showSuccessMessage();
+  } catch {
+    showErrorMessage();
+  } finally {
+    toggleSubmitButton(false);
+  }
+};
+
+
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  sendForm(evt.target);
+};
+
+
+pictureOpenInput.addEventListener('change', onPictureInputChange);
 pictureCloseButton.addEventListener('click', onClosePictureButtonClick);
-form.addEventListener('submit', onFormSubmit);
+pictureForm.addEventListener('submit', onFormSubmit);
 scalePictureField.addEventListener('click', onZoomChange);
 fileChooser.addEventListener('change', onFileInputChange);
+init();
+reset();
