@@ -1,4 +1,4 @@
-import { filteredPhotos } from './data';
+import { photo } from './data';
 const createListPictures = document.createDocumentFragment();
 const socialCommentsLoader = document.querySelector('.social__comments-loader');
 const socialComments = document.querySelector('.social__comments');
@@ -11,8 +11,9 @@ const renderMessagesRange = (comments, startIndex) => {
     if (runIndex <= startIndex + cointss - 1) {
       const {avatar, message, name} = coment;
       const element = messageTemplate.cloneNode(true);
-      element.querySelector('.social__picture').src = avatar;
-      element.querySelector('.social__picture').alt = name;
+      const socialPpicture = element.querySelector('.social__picture');
+      socialPpicture.src = avatar;
+      socialPpicture.alt = name;
       element.querySelector('.social__text').textContent = message;
       createListPictures.appendChild(element);
     }
@@ -20,8 +21,8 @@ const renderMessagesRange = (comments, startIndex) => {
 };
 
 const getMessagesByIndex = (index) => {
-  const photos = [...filteredPhotos];
-  const curentPhoto = photos[index];
+
+  const curentPhoto = photo[index];
   return curentPhoto.comments;
 };
 
@@ -30,14 +31,14 @@ const renderMessagesByIndex = (index) => {
   const comments = getMessagesByIndex(index);
   let startIndex = 0;
 
-  const renderMessages = () =>{
+  const onRrenderMessages = () =>{
     startIndex += 5;
     socialComments.innerHTML = null;
     renderMessagesRange(comments, startIndex);
     socialComments.appendChild(createListPictures);
   };
 
-  socialCommentsLoader.addEventListener('click', renderMessages);
+  socialCommentsLoader.addEventListener('click', onRrenderMessages);
 
   renderMessagesRange(comments, startIndex);
 

@@ -1,10 +1,9 @@
-//import { photosList } from './gallery';
-import { renderMessagesByIndex } from './comment.js';
-import { isEscapeKey } from './util';
+import { renderMessagesByIndex } from './сomment.js';
+import { isEscapeKey } from './util.js';
+
+const LOAD_COMMENTS_PER_CLICK = 5;
 
 const photosList = document.querySelector('.pictures');
-
-
 const bigPhoto = document.querySelector('.big-picture');
 const miniPhoto = photosList.querySelectorAll('.picture');
 const closeButton = bigPhoto.querySelector('.big-picture__cancel');
@@ -12,14 +11,11 @@ const bigPhotoSocial = document.querySelector('.big-picture__social');
 const socialCommentCount = document.querySelector('.social__comment-count');
 const socialCommentsLoader = document.querySelector('.social__comments-loader');
 
-const LOAD_COMMENTS_PER_CLICK = 5;
 let countReanderComment = 5;
 
 const openBigPhoto = () => {
   bigPhoto.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
-
-  //onEscapeKeydown();
 };
 
 const closeBigPhoto = () => {
@@ -28,21 +24,27 @@ const closeBigPhoto = () => {
   document.querySelector('.social__comment-count').classList.remove('hidden');
   document.querySelector('.comments-loader').classList.remove('hidden');
   countReanderComment = LOAD_COMMENTS_PER_CLICK;
+
 };
 
-const onEscapeKeydown = (commentsLoaderClick) => {
-  document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      closeBigPhoto();
-      socialCommentsLoader.removeEventListener('click', commentsLoaderClick);
-    }
-  });
+
+const onEscapeKey = (evt, commentsLoaderClick) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeBigPhoto();
+    document.removeEventListener('keydown',onEscapeKey);
+    socialCommentsLoader.removeEventListener('click', commentsLoaderClick);
+  }
+};
+
+const onEscapeKeydown = () => {
+  document.addEventListener('keydown', onEscapeKey);
 };
 
 const onClickButtonClose = (commentsLoaderClick) => {
   closeButton.addEventListener('click', () => {
     closeBigPhoto();
+    document.removeEventListener('keydown',onEscapeKey);
     socialCommentsLoader.removeEventListener('click', commentsLoaderClick);
   });
 };
