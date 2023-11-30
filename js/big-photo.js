@@ -30,24 +30,23 @@ const closeBigPhoto = () => {
 };
 
 
-const EscapeKeyDown = (evt, commentsLoaderClick) => {
+const onEscapeKey = (evt, commentsLoaderClick) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeBigPhoto();
-    document.removeEventListener('keydown',EscapeKeyDown);
+    document.removeEventListener('keydown',onEscapeKey);
     socialCommentsLoader.removeEventListener('click', commentsLoaderClick);
   }
 };
 
 const onEscapeKeydown = () => {
-  document.addEventListener('keydown', EscapeKeyDown);
-
+  document.addEventListener('keydown', onEscapeKey);
 };
 
 const onClickButtonClose = (commentsLoaderClick) => {
   closeButton.addEventListener('click', () => {
     closeBigPhoto();
-    document.removeEventListener('keydown',EscapeKeyDown);
+    document.removeEventListener('keydown',onEscapeKey);
     socialCommentsLoader.removeEventListener('click', commentsLoaderClick);
   });
 };

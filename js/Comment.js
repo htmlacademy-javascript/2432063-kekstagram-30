@@ -12,8 +12,9 @@ const renderMessagesRange = (comments, startIndex) => {
     if (runIndex <= startIndex + cointss - 1) {
       const {avatar, message, name} = coment;
       const element = messageTemplate.cloneNode(true);
-      element.querySelector('.social__picture').src = avatar;
-      element.querySelector('.social__picture').alt = name;
+      const socialPicture = element.querySelector('.social__picture');
+      socialPicture('.social__picture').src = avatar;
+      socialPicture('.social__picture').alt = name;
       element.querySelector('.social__text').textContent = message;
       createListPictures.appendChild(element);
     }
@@ -31,14 +32,14 @@ const renderMessagesByIndex = (index) => {
   const comments = getMessagesByIndex(index);
   let startIndex = 0;
 
-  const renderMessages = () =>{
+  const onRenderMessages = () =>{
     startIndex += 5;
     socialComments.innerHTML = null;
     renderMessagesRange(comments, startIndex);
     socialComments.appendChild(createListPictures);
   };
 
-  socialCommentsLoader.addEventListener('click', renderMessages);
+  socialCommentsLoader.addEventListener('click', onRenderMessages);
 
   renderMessagesRange(comments, startIndex);
 
