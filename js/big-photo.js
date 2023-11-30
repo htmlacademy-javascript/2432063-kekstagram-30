@@ -1,11 +1,9 @@
-const LOAD_COMMENTS_PER_CLICK = 5;
-
-import { renderMessagesByIndex } from './comment.js';
+import { renderMessagesByIndex } from './сomment.js';
 import { isEscapeKey } from './util.js';
 
+const LOAD_COMMENTS_PER_CLICK = 5;
+
 const photosList = document.querySelector('.pictures');
-
-
 const bigPhoto = document.querySelector('.big-picture');
 const miniPhoto = photosList.querySelectorAll('.picture');
 const closeButton = bigPhoto.querySelector('.big-picture__cancel');

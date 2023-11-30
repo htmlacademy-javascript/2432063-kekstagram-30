@@ -95,4 +95,6 @@ discussedButton.addEventListener('click', () => {
   debounceDiscussed();
 });
 
-export {filteredPhotos};
+const photo = [...filteredPhotos];
+
+export {photo};
