@@ -1,22 +1,22 @@
-const filtersElement = document.querySelector('.img-filters');
-
-const getRandomIndex = (min, max) => Math.floor(Math.random() * (max - min));
-
 const MAX_RANDOM_INDEX_COUNT = 10;
+
+import { getRandomIndex } from './util';
+
+const filtersElement = document.querySelector('.img-filters');
 
 const filterHandlers = {
   default: (data) => data,
 
   random: (data) => {
-    const randomIndexList = [];
+    const randomIndicesList = [];
     const max = Math.min(MAX_RANDOM_INDEX_COUNT, data.length);
-    while (randomIndexList.length < max) {
+    while (randomIndicesList.length < max) {
       const index = getRandomIndex(0, data.length);
-      if (!randomIndexList.includes(index)) {
-        randomIndexList.push(index);
+      if (!randomIndicesList.includes(index)) {
+        randomIndicesList.push(index);
       }
     }
-    return randomIndexList.map((index) => data[index]);
+    return randomIndicesList.map((index) => data[index]);
   },
 
   discussed: (data) => [...data].sort((item1, item2) => item2.comments.length - item1.comments.length),

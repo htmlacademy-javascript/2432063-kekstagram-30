@@ -1,6 +1,6 @@
 import { pictureElement, modalElement } from './zoom.js';
 
-const effectsName = {
+const EffectsName = {
   DEFAULT: 'none',
   CHROME: 'chrome',
   SEPIA: 'sepia',
@@ -10,55 +10,55 @@ const effectsName = {
 };
 
 const effectToFilter = {
-  [effectsName.CHROME]: {
+  [EffectsName.CHROME]: {
     style: 'grayscale',
     unit: '',
   },
-  [effectsName.SEPIA]: {
+  [EffectsName.SEPIA]: {
     style: 'sepia',
     unit: '',
   },
-  [effectsName.MARVIN]: {
+  [EffectsName.MARVIN]: {
     style: 'invert',
     unit: '%',
   },
-  [effectsName.PHOBOS]: {
+  [EffectsName.PHOBOS]: {
     style: 'blur',
     unit: 'px',
   },
-  [effectsName.HEAT]: {
+  [EffectsName.HEAT]: {
     style: 'brightness',
     unit: '',
   },
 };
 
 const effectToSliderOptions = {
-  [effectsName.DEFAULT]: {
+  [EffectsName.DEFAULT]: {
     min: 0,
     max: 100,
     step: 1,
   },
-  [effectsName.CHROME]: {
+  [EffectsName.CHROME]: {
     min: 0,
     max: 1,
     step: 0.1,
   },
-  [effectsName.SEPIA]: {
+  [EffectsName.SEPIA]: {
     min: 0,
     max: 1,
     step: 0.1,
   },
-  [effectsName.MARVIN]: {
+  [EffectsName.MARVIN]: {
     min: 0,
     max: 100,
     step: 1,
   },
-  [effectsName.PHOBOS]: {
+  [EffectsName.PHOBOS]: {
     min: 0,
     max: 3,
     step: 0.1,
   },
-  [effectsName.HEAT]: {
+  [EffectsName.HEAT]: {
     min: 1,
     max: 3,
     step: 0.1,
@@ -70,9 +70,9 @@ const sliderElement = modalElement.querySelector('.effect-level__slider');
 const sliderContainerElement = modalElement.querySelector('.img-upload__effect-level');
 const effectLevelElement = modalElement.querySelector('.effect-level__value');
 
-let chosenEffect = effectsName.DEFAULT;
+let chosenEffect = EffectsName.DEFAULT;
 
-const isDefault = () => chosenEffect === effectsName.DEFAULT;
+const isDefault = () => chosenEffect === EffectsName.DEFAULT;
 
 const setImageStyle = () => {
   if (isDefault()) {
@@ -143,7 +143,7 @@ const setEffect = (effect) => {
 };
 
 const reset = () => {
-  setEffect(effectsName.DEFAULT);
+  setEffect(EffectsName.DEFAULT);
 };
 
 const onEffectsChange = (evt) => {

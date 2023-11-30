@@ -2,7 +2,7 @@ import { loadPictures } from './api.js';
 import { debounce, showErrorMessage } from './util.js';
 import { initGalleryFilters } from './filter.js';
 import { renderPhotos } from './gallery.js';
-import { openPhoto } from './bigPhoto.js';
+import { openPhoto } from './big-photo.js';
 
 const filterForm = document.querySelector('.img-filters__form');
 const defaultButton = filterForm.querySelector('#filter-default');
