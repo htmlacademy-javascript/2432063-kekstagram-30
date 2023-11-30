@@ -1,6 +1,6 @@
-const MAX_RANDOM_INDEX_COUNT = 10;
-
 import { getRandomIndex } from './util';
+
+const MAX_RANDOM_INDEX_COUNT = 10;
 
 const filtersElement = document.querySelector('.img-filters');
 

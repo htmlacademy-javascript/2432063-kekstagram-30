@@ -1,4 +1,5 @@
 import { fPhoto } from './data';
+
 const createListPictures = document.createDocumentFragment();
 const socialCommentsLoader = document.querySelector('.social__comments-loader');
 const socialComments = document.querySelector('.social__comments');
