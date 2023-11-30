@@ -20,50 +20,49 @@ const bootstrap = async () => {
 };
 
 const photos = await bootstrap();
-let filteredPhotos = initGalleryFilters(photos, 'default');
+
+const rePaint = (felter) => {
+  const pictures = document.querySelectorAll('.picture');
+  pictures.forEach((item) => item.remove());
+  const elements = initGalleryFilters(photos, felter);
+  const imageFilterButtonActive = filterForm.querySelector('.img-filters__button--active');
+  imageFilterButtonActive.classList.remove('img-filters__button--active');
+  renderPhotos(elements);
+  const photosList = document.querySelector('.pictures');
+  const miniPhoto = photosList.querySelectorAll('.picture');
+
+  openPhoto(miniPhoto);
+};
+
+const filteredPhotos = initGalleryFilters(photos, 'default');
 
 const rePaintDefault = () => {
-  const pictures = document.querySelectorAll('.picture');
-  pictures.forEach((item) => item.remove());
-  const elements = initGalleryFilters(photos, 'default');
-  const imageFilterButtonActive = filterForm.querySelector('.img-filters__button--active');
-  imageFilterButtonActive.classList.remove('img-filters__button--active');
+  rePaint('default');
+  // const pictures = document.querySelectorAll('.picture');
+  // pictures.forEach((item) => item.remove());
+  // const elements = initGalleryFilters(photos, 'default');
+  // const imageFilterButtonActive = filterForm.querySelector('.img-filters__button--active');
+  // imageFilterButtonActive.classList.remove('img-filters__button--active');
   defaultButton.classList.add('img-filters__button--active');
-  renderPhotos(elements);
+  // renderPhotos(elements);
 
 
-  const photosList = document.querySelector('.pictures');
-  const miniPhoto = photosList.querySelectorAll('.picture');
+  // const photosList = document.querySelector('.pictures');
+  // const miniPhoto = photosList.querySelectorAll('.picture');
 
-  openPhoto(miniPhoto);
+  // openPhoto(miniPhoto);
 
 
 };
+
 const rePaintRandom = () => {
-  const pictures = document.querySelectorAll('.picture');
-  pictures.forEach((item) => item.remove());
-  const elements = initGalleryFilters(photos, 'random');
-  const imageFilterButtonActive = filterForm.querySelector('.img-filters__button--active');
-  imageFilterButtonActive.classList.remove('img-filters__button--active');
+  rePaint('random');
   randomButton.classList.add('img-filters__button--active');
-  renderPhotos(elements);
-  const photosList = document.querySelector('.pictures');
-  const miniPhoto = photosList.querySelectorAll('.picture');
-  openPhoto(miniPhoto);
-  filteredPhotos = initGalleryFilters(photos, 'random');
 };
-const rePaintDiscussed = () => {
-  const pictures = document.querySelectorAll('.picture');
-  pictures.forEach((item) => item.remove());
-  const elements = initGalleryFilters(photos, 'discussed');
-  const imageFilterButtonActive = filterForm.querySelector('.img-filters__button--active');
-  imageFilterButtonActive.classList.remove('img-filters__button--active');
-  discussedButton.classList.add('img-filters__button--active');
-  renderPhotos(elements);
 
-  const photosList = document.querySelector('.pictures');
-  const miniPhoto = photosList.querySelectorAll('.picture');
-  openPhoto(miniPhoto);
+const rePaintDiscussed = () => {
+  rePaint('discussed');
+  discussedButton.classList.add('img-filters__button--active');
 };
 
 const debounceDefault = debounce(rePaintDefault);
