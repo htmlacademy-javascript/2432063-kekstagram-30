@@ -15,22 +15,17 @@ const showErrorMessage = () => {
 };
 
 // функция случайного числа
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
+const getRandomIndex = (min, max) => Math.floor(Math.random() * (max - min));
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-function debounce(callback, timeoutDelay = 500) {
+const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
-export {isEscapeKey, showErrorMessage, debounce, getRandomInteger};
+export {isEscapeKey, showErrorMessage, debounce, getRandomIndex};
 
