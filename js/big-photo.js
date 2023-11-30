@@ -24,21 +24,27 @@ const closeBigPhoto = () => {
   document.querySelector('.social__comment-count').classList.remove('hidden');
   document.querySelector('.comments-loader').classList.remove('hidden');
   countReanderComment = LOAD_COMMENTS_PER_CLICK;
+
 };
 
-const onEscapeKeydown = (commentsLoaderClick) => {
-  document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      closeBigPhoto();
-      socialCommentsLoader.removeEventListener('click', commentsLoaderClick);
-    }
-  });
+
+const onEscapeKey = (evt, commentsLoaderClick) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeBigPhoto();
+    document.removeEventListener('keydown',onEscapeKey);
+    socialCommentsLoader.removeEventListener('click', commentsLoaderClick);
+  }
+};
+
+const onEscapeKeydown = () => {
+  document.addEventListener('keydown', onEscapeKey);
 };
 
 const onClickButtonClose = (commentsLoaderClick) => {
   closeButton.addEventListener('click', () => {
     closeBigPhoto();
+    document.removeEventListener('keydown',onEscapeKey);
     socialCommentsLoader.removeEventListener('click', commentsLoaderClick);
   });
 };
