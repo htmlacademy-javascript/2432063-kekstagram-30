@@ -1,4 +1,4 @@
-import { filteredPhotos } from './data';
+import { fPhoto } from './data';
 const createListPictures = document.createDocumentFragment();
 const socialCommentsLoader = document.querySelector('.social__comments-loader');
 const socialComments = document.querySelector('.social__comments');
@@ -20,7 +20,7 @@ const renderMessagesRange = (comments, startIndex) => {
 };
 
 const getMessagesByIndex = (index) => {
-  const photos = [...filteredPhotos];
+  const photos = [...fPhoto];
   const curentPhoto = photos[index];
   return curentPhoto.comments;
 };

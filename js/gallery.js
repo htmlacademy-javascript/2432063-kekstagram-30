@@ -1,5 +1,3 @@
-
-
 const renderPhotos = (photos) =>{
   const photoTemplate = document.querySelector('#picture').content;
   const photosList = document.querySelector('.pictures');
