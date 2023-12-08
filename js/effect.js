@@ -1,4 +1,4 @@
-import { pictureElement, modalElement } from './zoom.js';
+import {photoElement, modalElement } from './zoom.js';
 
 const EffectsName = {
   DEFAULT: 'none',
@@ -76,12 +76,12 @@ const isDefault = () => chosenEffect === EffectsName.DEFAULT;
 
 const setImageStyle = () => {
   if (isDefault()) {
-    pictureElement.style.filter = null;
+    photoElement.style.filter = null;
     return;
   }
   const { value } = effectLevelElement;
   const { style, unit } = effectToFilter[chosenEffect];
-  pictureElement.style.filter = `${style}(${value}${unit})`;
+  photoElement.style.filter = `${style}(${value}${unit})`;
 };
 
 const showSlider = () => {

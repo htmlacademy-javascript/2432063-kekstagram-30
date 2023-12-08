@@ -1,5 +1,5 @@
 import { photo } from './data';
-const createListPictures = document.createDocumentFragment();
+const createListPhotos = document.createDocumentFragment();
 const socialCommentsLoader = document.querySelector('.social__comments-loader');
 const socialComments = document.querySelector('.social__comments');
 const messageTemplate = document.querySelector('.social__comment');
@@ -11,11 +11,11 @@ const renderMessagesRange = (comments, startIndex) => {
     if (runIndex <= startIndex + cointss - 1) {
       const {avatar, message, name} = coment;
       const element = messageTemplate.cloneNode(true);
-      const socialPpicture = element.querySelector('.social__picture');
-      socialPpicture.src = avatar;
-      socialPpicture.alt = name;
+      const socialPhotos = element.querySelector('.social__picture');
+      socialPhotos.src = avatar;
+      socialPhotos.alt = name;
       element.querySelector('.social__text').textContent = message;
-      createListPictures.appendChild(element);
+      createListPhotos.appendChild(element);
     }
   });
 };
@@ -35,7 +35,7 @@ const renderMessagesByIndex = (index) => {
     startIndex += 5;
     socialComments.innerHTML = null;
     renderMessagesRange(comments, startIndex);
-    socialComments.appendChild(createListPictures);
+    socialComments.appendChild(createListPhotos);
   };
 
   socialCommentsLoader.addEventListener('click', onRrenderMessages);
@@ -43,7 +43,7 @@ const renderMessagesByIndex = (index) => {
   renderMessagesRange(comments, startIndex);
 
   socialComments.innerHTML = null;
-  socialComments.appendChild(createListPictures);
+  socialComments.appendChild(createListPhotos);
 };
 
 

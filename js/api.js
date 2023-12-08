@@ -15,7 +15,7 @@ const ErrorText = {
   SEND: 'Ошибка загрузки файла',
 };
 
-const request = async (url, method = HttpMethod.GET, body = null) => {
+const getPhotos = async (url, method = HttpMethod.GET, body = null) => {
   const response = await fetch(url, { method, body });
   if (!response.ok) {
     throw new Error(ErrorText[method]);
@@ -23,12 +23,12 @@ const request = async (url, method = HttpMethod.GET, body = null) => {
   return response.json();
 };
 
-const loadPictures = async () => request(SERVER_URL + ServerRoute.GET_DATA);
+const loadPhotos = async () => getPhotos(SERVER_URL + ServerRoute.GET_DATA);
 
-const sendPicture = async (pictureData) => request(
+const sendPhoto = async (photoData) => getPhotos(
   SERVER_URL + ServerRoute.SEND_DATA,
   HttpMethod.POST,
-  pictureData,
+  photoData,
 );
 
-export { loadPictures, sendPicture };
+export { loadPhotos, sendPhoto };
