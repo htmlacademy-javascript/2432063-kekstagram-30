@@ -1,7 +1,7 @@
 import { init, reset } from './effect';
-import { sendPicture } from './api.js';
+import { sendPhoto } from './api.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
-import { scalePictureField, onZoomChange, resetScale, pictureElement } from './zoom.js';
+import { scalePhotoField, onZoomChange, resetScale, photoElement } from './zoom.js';
 import { isEscapeKey } from './util.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -15,21 +15,21 @@ const ErrorText = {
 };
 
 const bodyElement = document.querySelector('body');
-const pictureForm = document.querySelector('.img-upload__form');
-const pictureUploadContainer = pictureForm.querySelector('.img-upload__overlay');
-const pictureOpenInput = pictureForm.querySelector('.img-upload__input');
-const pictureCloseButton = pictureForm.querySelector('.img-upload__cancel');
-const hashtagField = pictureForm.querySelector('.text__hashtags');
-const commentField = pictureForm.querySelector('.text__description');
-const submitButton = pictureForm.querySelector('.img-upload__submit');
-const effectsPreview = pictureForm.querySelectorAll('.effects__preview');
+const photoForm = document.querySelector('.img-upload__form');
+const photoUploadContainer = photoForm.querySelector('.img-upload__overlay');
+const photoOpenInput = photoForm.querySelector('.img-upload__input');
+const photoCloseButton = photoForm.querySelector('.img-upload__cancel');
+const hashtagField = photoForm.querySelector('.text__hashtags');
+const commentField = photoForm.querySelector('.text__description');
+const submitButton = photoForm.querySelector('.img-upload__submit');
+const effectsPreview = photoForm.querySelectorAll('.effects__preview');
 const fileChooser = document.querySelector('.img-upload__start input[type=file]');
 
 const toggleSubmitButton = (isDisabled) => {
   submitButton.disabled = isDisabled;
 };
 
-const pristine = new Pristine(pictureForm, {
+const pristine = new Pristine(photoForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error',
@@ -46,7 +46,7 @@ const onCommentFieldChange = () => {
 };
 
 const showForm = () => {
-  pictureUploadContainer.classList.remove('hidden');
+  photoUploadContainer.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   hashtagField.addEventListener('change', onHashtagFieldChange);
@@ -54,10 +54,10 @@ const showForm = () => {
 };
 
 const closeForm = () => {
-  pictureUploadContainer.classList.add('hidden');
+  photoUploadContainer.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  pictureForm.reset();
+  photoForm.reset();
   pristine.reset();
   resetScale();
 };
@@ -99,20 +99,20 @@ commentField.addEventListener('keydown', (evt) => {
   evt.stopPropagation();
 });
 
-const onPictureInputChange = () => {
+const onPhotoInputChange = () => {
   showForm();
 };
 
-const onClosePictureButtonClick = () => {
+const onClosePhotoButtonClick = () => {
   closeForm();
 };
 
 const onFileInputChange = () => {
-  const file = pictureOpenInput.files[0];
+  const file = photoOpenInput.files[0];
 
   if (file && isValidType(file)) {
     const url = URL.createObjectURL(file);
-    pictureElement.src = url;
+    photoElement.src = url;
     effectsPreview.forEach((preview) => {
       preview.style.backgroundImage = `url('${url}')`;
     });
@@ -162,7 +162,7 @@ const sendForm = async (formElement) => {
 
   try {
     toggleSubmitButton(true);
-    await sendPicture(new FormData(formElement));
+    await sendPhoto(new FormData(formElement));
     closeForm();
     showSuccessMessage();
   } catch {
@@ -179,10 +179,10 @@ const onFormSubmit = (evt) => {
 };
 
 
-pictureOpenInput.addEventListener('change', onPictureInputChange);
-pictureCloseButton.addEventListener('click', onClosePictureButtonClick);
-pictureForm.addEventListener('submit', onFormSubmit);
-scalePictureField.addEventListener('click', onZoomChange);
+photoOpenInput.addEventListener('change', onPhotoInputChange);
+photoCloseButton.addEventListener('click', onClosePhotoButtonClick);
+photoForm.addEventListener('submit', onFormSubmit);
+scalePhotoField.addEventListener('click', onZoomChange);
 fileChooser.addEventListener('change', onFileInputChange);
 init();
 reset();

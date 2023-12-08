@@ -6,21 +6,21 @@ const renderPhotos = (photos) =>{
 
   const createPhotos = photos; // массив фотографий
 
-  const createListPictures = document.createDocumentFragment();
+  const createListPhotos = document.createDocumentFragment();
 
 
   // заполняет созданный элемент
   createPhotos.forEach(({url, description, likes, comments}) => {
     const element = photoTemplate.cloneNode(true);
-    const pictureImg = element.querySelector('.picture__img');
-    pictureImg.src = url;
-    pictureImg.alt = description;
+    const photoImg = element.querySelector('.picture__img');
+    photoImg.src = url;
+    photoImg.alt = description;
     element.querySelector('.picture__likes').textContent = likes;
     element.querySelector('.picture__comments').textContent = comments.length;
-    createListPictures.appendChild(element);
+    createListPhotos.appendChild(element);
   });
 
-  photosList.appendChild(createListPictures);
+  photosList.appendChild(createListPhotos);
 
 };
 

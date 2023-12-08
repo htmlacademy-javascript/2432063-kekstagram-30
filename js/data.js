@@ -1,4 +1,4 @@
-import { loadPictures } from './api.js';
+import { loadPhotos } from './api.js';
 import { debounce, showErrorMessage } from './util.js';
 import { initGalleryFilters } from './filter.js';
 import { renderPhotos } from './gallery.js';
@@ -12,20 +12,20 @@ const discussedButton = filterForm.querySelector('#filter-discussed');
 
 const bootstrap = async () => {
   try {
-    const pictures = await loadPictures();
-    return pictures;
+    const photos = await loadPhotos();
+    return photos;
   } catch (error) {
     showErrorMessage();
   }
 };
 
-const photos = await bootstrap();
-let filteredPhotos = initGalleryFilters(photos, 'default');
+const allPhotos = await bootstrap();
+let filteredPhotos = initGalleryFilters(allPhotos, 'default');
 
 const rePaintDefault = () => {
-  const pictures = document.querySelectorAll('.picture');
-  pictures.forEach((item) => item.remove());
-  const elements = initGalleryFilters(photos, 'default');
+  const photos = document.querySelectorAll('.picture');
+  photos.forEach((item) => item.remove());
+  const elements = initGalleryFilters(allPhotos, 'default');
   const imageFilterButtonActive = filterForm.querySelector('.img-filters__button--active');
   imageFilterButtonActive.classList.remove('img-filters__button--active');
   defaultButton.classList.add('img-filters__button--active');
@@ -40,9 +40,9 @@ const rePaintDefault = () => {
 
 };
 const rePaintRandom = () => {
-  const pictures = document.querySelectorAll('.picture');
-  pictures.forEach((item) => item.remove());
-  const elements = initGalleryFilters(photos, 'random');
+  const photos = document.querySelectorAll('.picture');
+  photos.forEach((item) => item.remove());
+  const elements = initGalleryFilters(allPhotos, 'random');
   const imageFilterButtonActive = filterForm.querySelector('.img-filters__button--active');
   imageFilterButtonActive.classList.remove('img-filters__button--active');
   randomButton.classList.add('img-filters__button--active');
@@ -50,12 +50,12 @@ const rePaintRandom = () => {
   const photosList = document.querySelector('.pictures');
   const miniPhoto = photosList.querySelectorAll('.picture');
   openPhoto(miniPhoto);
-  filteredPhotos = initGalleryFilters(photos, 'random');
+  filteredPhotos = initGalleryFilters(allPhotos, 'random');
 };
 const rePaintDiscussed = () => {
-  const pictures = document.querySelectorAll('.picture');
-  pictures.forEach((item) => item.remove());
-  const elements = initGalleryFilters(photos, 'discussed');
+  const photos = document.querySelectorAll('.picture');
+  photos.forEach((item) => item.remove());
+  const elements = initGalleryFilters(allPhotos, 'discussed');
   const imageFilterButtonActive = filterForm.querySelector('.img-filters__button--active');
   imageFilterButtonActive.classList.remove('img-filters__button--active');
   discussedButton.classList.add('img-filters__button--active');

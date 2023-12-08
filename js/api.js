@@ -23,12 +23,12 @@ const request = async (url, method = HttpMethod.GET, body = null) => {
   return response.json();
 };
 
-const loadPictures = async () => request(SERVER_URL + ServerRoute.GET_DATA);
+const loadPhotos = async () => request(SERVER_URL + ServerRoute.GET_DATA);
 
-const sendPicture = async (pictureData) => request(
+const sendPhoto = async (photoData) => request(
   SERVER_URL + ServerRoute.SEND_DATA,
   HttpMethod.POST,
-  pictureData,
+  photoData,
 );
 
-export { loadPictures, sendPicture };
+export { loadPhotos, sendPhoto };

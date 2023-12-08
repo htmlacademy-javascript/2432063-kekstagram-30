@@ -2,14 +2,14 @@ const MAX_ZOOM = 100;
 const MIN_ZOOM = 25;
 const STEP_ZOOM = 25;
 
-const scalePictureField = document.querySelector('.img-upload__scale');
-const buttonBigger = scalePictureField.querySelector('.scale__control--bigger');
-const buttonSmaller = scalePictureField.querySelector('.scale__control--smaller');
-const pictureScalePercent = scalePictureField.querySelector('.scale__control--value');
+const scalePhotoField = document.querySelector('.img-upload__scale');
+const buttonBigger = scalePhotoField.querySelector('.scale__control--bigger');
+const buttonSmaller = scalePhotoField.querySelector('.scale__control--smaller');
+const photosScalePercent = scalePhotoField.querySelector('.scale__control--value');
 const modalElement = document.querySelector('.img-upload');
-const pictureElement = modalElement.querySelector('.img-upload__preview img');
+const photoElement = modalElement.querySelector('.img-upload__preview img');
 
-let scaleZoom = parseInt(pictureScalePercent.value.replace('%', ''), 10);
+let scaleZoom = parseInt(photosScalePercent.value.replace('%', ''), 10);
 
 const onZoomChange = (evt) => {
   evt.preventDefault();
@@ -23,14 +23,14 @@ const onZoomChange = (evt) => {
       scaleZoom += STEP_ZOOM;
     }
   }
-  pictureScalePercent.value = `${scaleZoom}%`;
-  pictureElement.style.transform = `scale(${scaleZoom / 100})`;
+  photosScalePercent.value = `${scaleZoom}%`;
+  photoElement.style.transform = `scale(${scaleZoom / 100})`;
 };
 
 const resetScale = () => {
-  pictureElement.style.transform = `scale(${MAX_ZOOM / 100})`;
-  pictureScalePercent.value = `${MAX_ZOOM}%`;
+  photoElement.style.transform = `scale(${MAX_ZOOM / 100})`;
+  photosScalePercent.value = `${MAX_ZOOM}%`;
   scaleZoom = MAX_ZOOM;
 };
 
-export { pictureElement, modalElement, scalePictureField, onZoomChange, resetScale };
+export { photoElement, modalElement, scalePhotoField, onZoomChange, resetScale };
