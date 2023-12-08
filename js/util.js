@@ -14,7 +14,6 @@ const showErrorMessage = () => {
   }, REMOVE_MESSAGE_TIMEOUT);
 };
 
-// функция случайного числа
 const getRandomIndex = (min, max) => Math.floor(Math.random() * (max - min));
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
